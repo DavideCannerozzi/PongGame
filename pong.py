@@ -13,7 +13,7 @@ wn = turtle.Screen()
 start_first = turtle.textinput('Name First Player', '{}'.format(first_player))
 start_second = turtle.textinput('Name Second Player', '{}'.format(second_player))
 wn.title('Pong By Davide Cannerozzi')
-wn.setup(900, 500)
+wn.setup(800, 600)
 wn.bgcolor('black')
 wn.tracer(0)
 
@@ -45,8 +45,8 @@ ball.shape('circle')
 ball.color('white')
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 2
-ball.dy = 2
+ball.dx = 4
+ball.dy = 4
 
 #### Paddle Move ####
 
@@ -81,3 +81,41 @@ wn.onkeypress(paddle_right_down, 'l')
 
 while True:
     wn.update()
+
+    #### Ball movement ####
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    #### Score ####
+    score = turtle.Turtle()
+    score.color('white')
+    score.penup()
+    score.speed(0)
+    score.goto(0, 250)
+    score.shape('blank')
+    score.write('{} : {} , {} : {} '.format(start_first, score_a, start_second, score_b),
+                align='center',
+                font=("Arial", 22, "normal"))
+
+    #### BOUNCING BALL: TOP AND BOTTOM BORDERS ####
+    if ball.ycor() > 290:
+       ball.sety(290)
+       ball.dy *= -1
+
+    if ball.ycor() < -290:
+       ball.sety(-290)
+       ball.dy *= -1
+
+    #### BOUNCING BALL: LEFT AND RIGHT BORDERS ####
+    if ball.xcor() > 390:
+       ball.goto(0, 0)
+       score_a+= 1
+
+    if ball.xcor() < -390:
+       ball.goto(0, 0)
+       score_b+= 1
+
+
+
+
+
